@@ -7,7 +7,9 @@
 }
 
 .brand {
+  display: flex;
   font-size: 2em;
+  align-items: center;
 }
 
 .brand span {
@@ -31,4 +33,8 @@
 .active {
   background-color: #000;
   color: #fff;
+}
+
+.logo {
+  background-color: blue;
 }
