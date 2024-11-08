@@ -1,4 +1,4 @@
-import { db } from "../firebase/config";
+import { db, auth } from "../firebase/config";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -13,8 +13,6 @@ export const useAuthentication = () => {
   const [loading, setLoading] = useState(null);
 
   const [cancelled, setCancelled] = useState(false);
-
-  const auth = getAuth();
 
   function checkIfIsCancelled() {
     if (cancelled) {
@@ -47,9 +45,32 @@ export const useAuthentication = () => {
     }
   };
 
-  const signOut = () => {
+  const logout = () => {
     checkIfIsCancelled();
     signOut(auth);
+  };
+
+  const signIn = async (data) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      setLoading(false);
+    } catch (error) {
+      let systemError;
+      if (error.message.includes("user-not-found")) {
+        systemError = "Usuário não encontrado";
+      } else if (error.message.includes("wrong-password")) {
+        systemError = "Senha inválida";
+      } else if (error.message.includes("invalid-login")) {
+        systemError = "Credenciais inválidas";
+      } else {
+        systemError = "Erro ao logar";
+      }
+      setLoading(false);
+      setError(systemError);
+    }
   };
 
   useEffect(() => {
@@ -61,6 +82,7 @@ export const useAuthentication = () => {
     createUser,
     error,
     loading,
-    signOut,
+    logout,
+    signIn,
   };
 };

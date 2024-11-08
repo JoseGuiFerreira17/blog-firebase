@@ -19,10 +19,9 @@ import Footer from "./components/Footer/Footer";
 
 function App() {
   const [user, setUser] = useState(undefined);
-
   const { auth } = useAuthentication();
 
-  const loadinngUser = user === undefined;
+  const loadingUser = user === undefined;
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -30,13 +29,13 @@ function App() {
     });
   }, [auth]);
 
-  if (loadinngUser) {
+  if (loadingUser) {
     return <p>Carregando...</p>;
   }
 
   return (
     <div className="App">
-      <AuthProvider value={user}>
+      <AuthProvider value={{ user }}>
         <BrowserRouter>
           <Navbar />
           <div className="container">

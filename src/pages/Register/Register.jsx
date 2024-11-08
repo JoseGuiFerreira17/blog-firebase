@@ -38,7 +38,7 @@ function Register() {
       <h1>Cadastre-se</h1>
       <p>Crie seu usuário e compartilhe suas histórias!</p>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="">
+        <label>
           <span>Nome:</span>
           <input
             type="text"
@@ -49,7 +49,7 @@ function Register() {
             onChange={(e) => setDisplayName(e.target.value)}
           />
         </label>
-        <label htmlFor="">
+        <label>
           <span>Email:</span>
           <input
             type="email"
@@ -60,7 +60,7 @@ function Register() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-        <label htmlFor="">
+        <label>
           <span>Senha:</span>
           <input
             type="password"
@@ -71,7 +71,7 @@ function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <label htmlFor="">
+        <label>
           <span>Confirmação de senha:</span>
           <input
             type="password"
