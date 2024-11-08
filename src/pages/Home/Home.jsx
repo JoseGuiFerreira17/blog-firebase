@@ -12,6 +12,9 @@ function Home() {
   const { documents: posts, loading } = useFetchDocuments("posts");
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (search) {
+      navigate(`/search?q=${search}`);
+    }
   };
   return (
     <div className={styles.home}>
