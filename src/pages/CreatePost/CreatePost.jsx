@@ -2,6 +2,7 @@ import styles from "./CreatePost.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
+import { useInsertDocument } from "../../hooks/useInsertDocument";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
@@ -9,9 +10,42 @@ function CreatePost() {
   const [body, setBody] = useState("");
   const [tags, setTags] = useState([]);
   const [formError, setFormError] = useState("");
+  const navigate = useNavigate();
+
+  const { insertDocument, response } = useInsertDocument("posts");
+
+  const { user } = useAuthValue();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setFormError("");
+
+    try {
+      new URL(image);
+    } catch {
+      setFormError("URL da imagem inválida");
+    }
+
+    if (formError) {
+      return;
+    }
+
+    const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase());
+
+    if (!title || !image || !body || !tags) {
+      setFormError("Preencha todos os campos");
+      return;
+    }
+
+    insertDocument({
+      title,
+      image,
+      body,
+      tags: tagsArray,
+      uid: user.uid,
+      createdBy: user.displayName,
+    });
+    navigate("/");
   };
 
   return (
@@ -34,7 +68,7 @@ function CreatePost() {
           <input
             type="text"
             value={image}
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={(e) => setImage(e.target.value)}
             required
             placeholder="Insira uma imagem"
           />
@@ -58,14 +92,17 @@ function CreatePost() {
             placeholder="Insira as tags separadas por vírgula"
           />
         </label>
-        <button type="submit" className="btn">
-          Criar Post
-        </button>
-        {/* {!loading && (<button type="submit" className="btn">
-          Criar Post
-        </button>)}
-        {loading && (<button type="submit" className="btn" disabled>} */}
-        {formError && <p>{formError}</p>}
+        {!response.loading && (
+          <button type="submit" className="btn">
+            Criar Post
+          </button>
+        )}
+        {response.loading && (
+          <button type="submit" className="btn" disabled>
+            Aguarde...
+          </button>
+        )}
+        {response.error || (formError && <p className="error">{response.error || formError}</p>)}
       </form>
     </div>
   );

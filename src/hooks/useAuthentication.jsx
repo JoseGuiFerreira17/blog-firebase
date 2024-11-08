@@ -1,6 +1,5 @@
 import { db, auth } from "../firebase/config";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -26,9 +25,10 @@ export const useAuthentication = () => {
     setError(null);
     try {
       const { user } = await createUserWithEmailAndPassword(auth, data.email, data.password);
-      await updateProfile(user, {
-        displayName: data.name,
+      const res = await updateProfile(user, {
+        displayName: data.displayName,
       });
+      console.log(res);
       setLoading(false);
       return user;
     } catch (error) {
