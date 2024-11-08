@@ -19,6 +19,7 @@ import Footer from "./components/Footer/Footer";
 
 function App() {
   const [user, setUser] = useState(undefined);
+
   const { auth } = useAuthentication();
 
   const loadinngUser = user === undefined;
