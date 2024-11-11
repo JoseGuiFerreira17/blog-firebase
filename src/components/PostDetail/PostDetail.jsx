@@ -15,7 +15,7 @@ function PostDetail({ post }) {
           </p>
         ))}
       </div>
-      <Link className="btn btn-outline" to={`/posts/${post.id}`}>
+      <Link className="btn btn-outline" to={`/post/${post.id}`}>
         Ler
       </Link>
     </div>
