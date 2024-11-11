@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import CreatePost from "./pages/CreatePost/CreatePost";
 import Search from "./pages/Search/Search";
 import Post from "./pages/Post/Post";
+import EditPost from "./pages/EditPost/EditPost";
 
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -30,7 +31,6 @@ function App() {
       setUser(user);
     });
   }, [auth]);
-
   if (loadingUser) {
     return <p>Carregando...</p>;
   }
@@ -46,6 +46,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/search" element={<Search />} />
               <Route path="/post/:id" element={<Post />} />
+              <Route path="/edit-post/:id" element={<EditPost />} />
               <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
               <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
               <Route

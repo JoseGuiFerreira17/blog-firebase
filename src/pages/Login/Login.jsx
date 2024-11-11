@@ -18,8 +18,8 @@ function Login() {
   };
   return (
     <div className={styles.login}>
-      <h1>Cadastre-se</h1>
-      <p>Crie seu usuário e compartilhe suas histórias!</p>
+      <h1>Entrar</h1>
+      <p>Faça o login para poder utilizar o sistema!</p>
       <form onSubmit={handleSubmit}>
         <label>
           <span>Email:</span>
@@ -43,13 +43,13 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        {!loading && <button className="btn">Cadastrar</button>}
+        {!loading && <button className="btn">Entrar</button>}
         {loading && (
           <button className="btn" disabled>
             Aguarde...
           </button>
         )}
-        {error && <p className="error">{error}</p>}
+        {error || (AuthError && <p className="error">{error || AuthError}</p>)}
       </form>
     </div>
   );

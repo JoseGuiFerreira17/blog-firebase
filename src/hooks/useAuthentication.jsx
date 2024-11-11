@@ -28,7 +28,6 @@ export const useAuthentication = () => {
       const res = await updateProfile(user, {
         displayName: data.displayName,
       });
-      console.log(res);
       setLoading(false);
       return user;
     } catch (error) {

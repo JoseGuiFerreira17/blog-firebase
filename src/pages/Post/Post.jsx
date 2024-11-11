@@ -7,8 +7,6 @@ const Post = () => {
   const { id } = useParams();
   const { document: post, error, loading } = useFetchDocument("posts", id);
 
-  console.log(error);
-
   return (
     <div className={styles.post_container}>
       {loading && <p>Carregando...</p>}
